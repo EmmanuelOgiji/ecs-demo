@@ -1,3 +1,6 @@
+# aws eks update-kubeconfig --region eu-west-2 --name epo-flask-app-eks
+# k expose deploy flask-app-deploy --type=LoadBalancer --port=80 --target-port=9900
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +21,7 @@ spec:
         app: flask-app-deploy
     spec:
       containers:
-        - image: 297447125487.dkr.ecr.eu-west-2.amazonaws.com/epo-flask-app-repo
+        - image: 297447125487.dkr.ecr.eu-west-2.amazonaws.com/epo-flask-app-repo:latest
           name: cloudboosta-flask-app
           ports:
             - containerPort: 9900
