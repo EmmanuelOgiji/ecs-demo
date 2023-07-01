@@ -2,6 +2,20 @@
 resource "aws_ecr_repository" "repo" {
   name                 = "${var.name}-repo"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
+}
+
+resource "null_resource" "push_image" {
+  provisioner "local-exec" {
+    command = "bash ${path.module}/push-image.sh"
+    environment = {
+      AWS_ACCESS_KEY_ID     = var.access_key
+      AWS_SECRET_ACCESS_KEY = var.secret_key
+      AWS_REGION            = var.region
+      REPO_URL              = aws_ecr_repository.repo.repository_url
+      REGISTRY              = split(aws_ecr_repository.repo.repository_url, "/")[0]
+    }
+  }
 }
 
 
@@ -118,6 +132,7 @@ resource "aws_ecs_task_definition" "task" {
       ]
     }
   ])
+  depends_on = [null_resource.push_image]
 }
 
 resource "aws_ecs_service" "service" {
