@@ -13,7 +13,7 @@ resource "null_resource" "push_image" {
       AWS_SECRET_ACCESS_KEY = var.secret_key
       AWS_REGION            = var.region
       REPO_URL              = aws_ecr_repository.repo.repository_url
-      REGISTRY              = split(aws_ecr_repository.repo.repository_url, "/")[0]
+      REGISTRY              = split("/", aws_ecr_repository.repo.repository_url)[0]
     }
   }
 }
