@@ -21,7 +21,7 @@ spec:
         app: flask-app-deploy
     spec:
       containers:
-        - image: 297447125487.dkr.ecr.eu-west-2.amazonaws.com/epo-flask-app-repo:latest
+        - image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
           name: cloudboosta-flask-app
           ports:
             - containerPort: 9900
